@@ -5,7 +5,7 @@ import asyncHandler from '../../utils/asyncHandler.js'
 
 const router= Router()
 router.post('/signup',asyncHandler(signup))
-router.post('/signin',signin)
+router.post('/signin',asyncHandler(signin))
 
 
 export default router
