@@ -33,6 +33,6 @@ const userSchema= new schema({
     }
 })
 
-const user=mongoose.model('userModel',userSchema)
+const User=mongoose.model('userModel',userSchema)
 
-export{user}
+export{User}

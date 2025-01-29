@@ -1,6 +1,7 @@
  import jwt from 'jsonwebtoken'
  import z, { string } from 'zod'
- import { user, user } from '../schema/userSchema.js'
+ import { User } from '../schema/userSchema.js'
+ import bcrypt from 'bcrypt'
 
  const signupBody=z.object({
   username:z.string().email(),
@@ -24,9 +25,13 @@
         message:"Email already taken/Incorrect inputs"
       })
     }
-    const user= await user.create({
+    
+    bcrypt.hash(req.body.password,saltRounds,function(err,hash){
+          const password=hash
+    })
+    const user= await User.create({
       username:req.body.username,
-      password:req.body.password,
+      password:password,
       firstName:req.body.firstName,
       lastName:req.body.lastName
     })
@@ -38,8 +43,10 @@
       token,
     })
   };
+
+   
   
-   const signin = (req, res) => {
+  const signin = (req, res) => {
     res.send("Signin logic here");
   };
   
