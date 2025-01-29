@@ -3,6 +3,7 @@ import {Dbconnection} from "./db/db.js"
 import cors from 'cors'
 import 'dotenv/config'
 import router from './routes/index.js'
+import {errorHandler} from './middlewares/globalErrorHandler.js'
 
 const app= express()
 
@@ -17,7 +18,7 @@ app.get("/",async(req,res)=>{
 
 app.use("/api",router)
 Dbconnection()
-
+app.use(errorHandler)
 app.listen(process.env.PORT,()=>{
     console.log("server listening in port 3000")
 })

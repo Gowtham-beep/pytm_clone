@@ -1,14 +1,16 @@
+ import jwt from 'jsonwebtoken'
+ import z from 'zod'
+
  const signup = (req, res) => {
-    res.send("Signup logic here");
+    const {username,password,firstName,lastName}=req?.body
+
   };
   
    const signin = (req, res) => {
     res.send("Signin logic here");
   };
   
-   const updateinfo = (req, res) => {
-    res.send("Update info logic here");
-  };
+
   
 
-export{signup,signin,updateinfo}
+export{signup,signin}
