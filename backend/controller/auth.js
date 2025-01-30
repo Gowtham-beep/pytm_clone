@@ -36,8 +36,7 @@
       firstName:req.body.firstName,
       lastName:req.body.lastName
     })
-    const token=jwt.sign({user},process.env.JWT_SECRET)
-
+    
     return res.status(200).json({
       message:"User created successfully",
       user,
@@ -71,7 +70,7 @@
       message:"Password Incorrect"
     })
    }
-   const token=jwt.sign({user},process.env.JWT_SECRET)
+   const token=jwt.sign({userId:user._id},process.env.JWT_SECRET)
 
    return res.status(200).json({
     message:"signin success",
