@@ -1,4 +1,4 @@
-import { User } from "../schema/userSchema.js";
+import { User } from "../schema/Schema.js";
 import z from 'zod'
 const userBody=z.object({
     password:z.string().optional(),

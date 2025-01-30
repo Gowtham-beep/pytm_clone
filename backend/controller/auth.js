@@ -1,6 +1,6 @@
  import jwt from 'jsonwebtoken'
  import z from 'zod'
- import { User } from '../schema/userSchema.js'
+ import { User, Account} from '../schema/Schema.js'
  import bcrypt from 'bcrypt'
 
  const saltRounds=8
@@ -14,6 +14,7 @@
  const signup = async(req, res) => {
     
     const{success}=signupBody.safeParse(req.body)
+    console.log(req.body)
     
     if(!success){
       return res.status(411).json({
@@ -36,11 +37,15 @@
       firstName:req.body.firstName,
       lastName:req.body.lastName
     })
+    const userId=user._id
+     await Account.create({
+      userId:userId,
+      balance:1+Math.random()*10000
+     })
     
     return res.status(200).json({
       message:"User created successfully",
-      user,
-      token,
+      user
     })
   };
 

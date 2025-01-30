@@ -1,8 +1,6 @@
 import mongoose from "mongoose";
-import { string } from "zod";
 
 const schema=mongoose.Schema
-const ObjectId=schema.ObjectId
 
 const userSchema= new schema({
     username:{
@@ -33,6 +31,19 @@ const userSchema= new schema({
     }
 })
 
-const User=mongoose.model('userModel',userSchema)
+const Accountschema= new schema({
+    userId:{
+        type:schema.Types.ObjectId,
+        ref:'User',
+        required:true
+    },
+    balance:{
+        type:Number,
+        required:true
+    }
+})
 
-export{User}
+const User=mongoose.model('User',userSchema)
+const Account=mongoose.model('Account',Accountschema)
+
+export{User,Account}
