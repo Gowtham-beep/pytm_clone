@@ -25,4 +25,37 @@ return res.status(200).json({
     updateinfo
 })
 }
-export{updateinfo}
+
+const getuserbynames=async(req,res)=>{
+    const {firstName,lastName}=req.query
+    
+    let filter={}
+    if(firstName){
+        filter.firstName={
+            $regex:firstName,$options:"i"
+        }
+    }
+    if(lastName){
+        filter.lastName={
+            $regex:lastName,$options:"i"
+        }
+    }
+    const users= await User.find(filter).select('-password')
+    if(!users ){
+        return res.status(400).json({
+            message:"Failed to fetch the user"
+        })
+    }
+    if(users.length===0 ){
+        return res.status(400).json({
+            message:"user dose not exits"
+        })
+    }
+    
+    return res.status(200).json({
+        message:"User fetched successfully",
+        users
+    })
+}
+
+export{updateinfo,getuserbynames}
