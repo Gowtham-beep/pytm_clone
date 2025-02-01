@@ -1,6 +1,6 @@
 export interface User {
   id: string;
-  email: string;
+  username: string;
   firstName: string;
   lastName: string;
 }
@@ -12,11 +12,12 @@ export interface AuthState {
 }
 
 export interface LoginCredentials {
-  email: string;
-  password: string;
+  username:string;
+  password:string;
 }
 
 export interface SignupCredentials extends LoginCredentials {
+  
   firstName: string;
   lastName: string;
 }

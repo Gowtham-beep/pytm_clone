@@ -6,7 +6,7 @@ import toast from 'react-hot-toast';
 
 export const Signup = () => {
   const [formData, setFormData] = useState({
-    email: '',
+    username: '',
     password: '',
     firstName: '',
     lastName: '',
@@ -18,7 +18,7 @@ export const Signup = () => {
     e.preventDefault();
     try {
       await signup(formData);
-      navigate('/dashboard');
+      navigate('/login');
     } catch (error) {
       toast.error('Failed to create account');
     }
@@ -65,12 +65,12 @@ export const Signup = () => {
             </div>
             <div>
               <input
-                name="email"
-                type="email"
+                name="username"
+                type="test"
                 required
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                 placeholder="Email address"
-                value={formData.email}
+                value={formData.username}
                 onChange={handleChange}
               />
             </div>
