@@ -20,9 +20,10 @@ if(!updateinfo){
         message:"Failed to update info"
     })
 }
+const {password,...updateinfoWithoutPassword}=updateinfo.toObject()
 return res.status(200).json({
     message:"Update successful",
-    updateinfo
+    updateinfoWithoutPassword
 })
 }
 

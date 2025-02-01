@@ -55,33 +55,40 @@
     password:z.string()
    })
   
-  const signin =async (req, res) => {
-   const {success}=signinBody.safeParse(req.body)
-   if(!success){
-    return res.status(411).json({
-      message:"Email taken/ incorrect"
-    })
-   }
-   const user= await User.findOne({
-    username:req.body.username
-   })
-   if(!user){
-    return res.status(400).json({
-      message:"User not found"
-    })
-   }
-   const password = await bcrypt.compare(req.body.password,user.password)
-   if(!password){
-    return res.status(411).json({
-      message:"Password Incorrect"
-    })
-   }
-   const token=jwt.sign({userId:user._id},process.env.JWT_SECRET)
-
-   return res.status(200).json({
-    message:"signin success",
-    token
-   })
-};
+   const signin = async (req, res) => {
+    const parsed = signinBody.safeParse(req.body);
+    
+    if (!parsed.success) {
+      return res.status(400).json({ 
+        message: "Invalid input", 
+        errors: parsed.error.format() 
+      });
+    }
+  
+    const { username, password } = parsed.data;
+  
+    const user = await User.findOne({ username });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+   
+  
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      return res.status(401).json({ message: "Incorrect password" });
+    }
+  
+    if (!process.env.JWT_SECRET) {
+      return res.status(500).json({ message: "JWT secret not set in environment" });
+    }
+  
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
+  
+    return res.status(200).json({ 
+      message: "Signin successful", 
+      token 
+    });
+  };
+  
 
 export{signup,signin}
