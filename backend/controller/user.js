@@ -13,7 +13,7 @@ if(!success){
         message:"Error while updating Information"
     })
 }
-console.log(req.userId)
+
 const updateinfo= await User.findByIdAndUpdate(req.userId,req.body,{new:true,runValidators:true})
 if(!updateinfo){
     return res.status(411).json({

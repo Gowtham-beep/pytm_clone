@@ -14,7 +14,7 @@
  const signup = async(req, res) => {
     
     const{success}=signupBody.safeParse(req.body)
-    console.log(req.body)
+    
     
     if(!success){
       return res.status(411).json({
