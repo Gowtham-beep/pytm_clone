@@ -60,8 +60,7 @@ const transfer=async(req,res)=>{
 
    return res.status(200).json({
         message:`${amount}Rs Transaction successfull `,
-        fromBalance:account.balance,
-        toBalance:toAccount.balance
+        fromBalance:account.balance
     })
 }
 export {getBalance,transfer}

@@ -15,7 +15,8 @@ const userSchema= new schema({
     password:{
         type:String,
         required:true,
-        minlength:6
+        minlength:6,
+        select:false
     },
     firstName:{
         type:String,

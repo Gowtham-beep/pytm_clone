@@ -30,10 +30,10 @@
       })
     }
     
-    const password= await bcrypt.hash(req.body.password,saltRounds)
+    const hashedPassword= await bcrypt.hash(req.body.password,saltRounds)
     const user= await User.create({
       username:req.body.username,
-      password:password,
+      password:hashedPassword,
       firstName:req.body.firstName,
       lastName:req.body.lastName
     })
@@ -43,9 +43,10 @@
       balance:1+Math.random()*10000
      })
     
+     const {password,...userWithoutPassword}=user.toObject()
     return res.status(200).json({
       message:"User created successfully",
-      user
+      userWithoutPassword
     })
   };
 
