@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { accountService, userService } from '../services/api';
 import { RefreshCw, DollarSign, Search, X } from 'lucide-react';
 import toast from 'react-hot-toast';
@@ -10,6 +10,7 @@ export const Dashboard = () => {
   const [balance, setBalance] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
   const [users, setUsers] = useState<User[]>([]);
+  const [user,setUser]=useState()
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [transferAmount, setTransferAmount] = useState('');
@@ -39,7 +40,7 @@ export const Dashboard = () => {
   useEffect(() => {
     fetchBalance();
     fetchUsers();
-  }, [currentUser?.id]);
+  }, [currentUser?._id]);
 
   const filteredUsers = users.filter((user) => {
     const searchLower = searchTerm.toLowerCase();
@@ -53,7 +54,8 @@ export const Dashboard = () => {
     if (!selectedUser) return;
     
     try {
-      await accountService.transfer(selectedUser.id, parseFloat(transferAmount));
+      console.log(selectedUser._id)
+      await accountService.transfer(selectedUser._id, parseFloat(transferAmount));
       toast.success('Transfer completed successfully');
       fetchBalance(); // Refresh balance after transfer
       setShowTransferModal(false);
