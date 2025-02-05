@@ -7,7 +7,6 @@ import { Login } from './pages/Login';
 import { Signup } from './pages/Signup';
 import { Dashboard } from './pages/Dashboard';
 import { Profile } from './pages/Profile';
-import { Transfer } from './pages/Transfer';
 import { Toaster } from 'react-hot-toast';
 
 function App() {
@@ -31,14 +30,6 @@ function App() {
               element={
                 <ProtectedRoute>
                   <Profile />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/transfer"
-              element={
-                <ProtectedRoute>
-                  <Transfer />
                 </ProtectedRoute>
               }
             />

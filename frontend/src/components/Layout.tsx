@@ -27,13 +27,6 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
                   Dashboard
                 </Link>
                 <Link
-                  to="/transfer"
-                  className="flex items-center px-3 py-2 text-gray-700 hover:text-indigo-600"
-                >
-                  <SendHorizontal className="w-5 h-5 mr-2" />
-                  Transfer
-                </Link>
-                <Link
                   to="/profile"
                   className="flex items-center px-3 py-2 text-gray-700 hover:text-indigo-600"
                 >
