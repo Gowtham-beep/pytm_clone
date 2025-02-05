@@ -60,7 +60,8 @@ const getuserbynames=async(req,res)=>{
 }
 
 const getProfile=async(req,res)=>{
-    const me= await User.findOne({userId:req.userId})
+    const me= await User.findOne({_id:req.userId})
+    console.log()
     if(!me){
         return res.status(400).json({
             message:"Failed to fetch user data"
@@ -72,6 +73,17 @@ const getProfile=async(req,res)=>{
     })
 }
 
+const getAllUsers=async(req,res)=>{
+    const users= await User.find()
+    if(!users){
+        return res.status(400).json({
+            message:"Failed to fetch users",
+        })
+    }
+    return res.status(200).json({
+        message:"users fetched successfully",
+        users
+    })
+}
 
-
-export{updateinfo,getuserbynames,getProfile}
+export{updateinfo,getuserbynames,getProfile,getAllUsers}
