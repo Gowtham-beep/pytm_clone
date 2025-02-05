@@ -10,7 +10,6 @@ export const Dashboard = () => {
   const [balance, setBalance] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
   const [users, setUsers] = useState<User[]>([]);
-  const [user,setUser]=useState()
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [transferAmount, setTransferAmount] = useState('');
@@ -31,7 +30,8 @@ export const Dashboard = () => {
   const fetchUsers = async () => {
     try {
       const response = await userService.getAllUsers();
-      setUsers(response.data.users);
+      const filteredUsers = response.data.users.filter((user:User) => user._id !== currentUser?._id)
+      setUsers(filteredUsers);
     } catch (error) {
       toast.error('Failed to fetch users');
     }
