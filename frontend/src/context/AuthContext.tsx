@@ -15,28 +15,22 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [auth, setAuth] = useState<AuthState>({
     user: null,
     token: localStorage.getItem('token'),
-    isAuthenticated: false,
+    isAuthenticated: !!localStorage.getItem('token'),
   });
-
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-      // Validate token and fetch user data
-      api.get('/api/user/me')
+      api.get('/api/user/me', { headers: { Authorization: `Bearer ${token}` } })
         .then(response => {
-          setAuth({
-            user: response.data,
-            token,
-            isAuthenticated: true,
-          });
+          setAuth({ user: response.data.user, token, isAuthenticated: true });
         })
         .catch(() => {
-          localStorage.removeItem('token');
+          localStorage.removeItem('token'); // Remove invalid token
           setAuth({ user: null, token: null, isAuthenticated: false });
         });
     }
   }, []);
-
+  
   const login = async (credentials: LoginCredentials) => {
     const response = await api.post('/api/auth/signin', credentials);
     const { token, user } = response.data;
@@ -45,10 +39,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const signup = async (credentials: SignupCredentials) => {
-    const response = await api.post('/api/auth/signup', credentials);
-    const { token, user } = response.data;
-    localStorage.setItem('token', token);
-    setAuth({ user, token:null, isAuthenticated: false });
+    await api.post('/api/auth/signup', credentials);
   };
 
   const logout = () => {
@@ -59,6 +50,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const updateUser = (user: User) => {
     setAuth(prev => ({ ...prev, user }));
   };
+  
 
   return (
     <AuthContext.Provider value={{ ...auth, login, signup, logout, updateUser }}>

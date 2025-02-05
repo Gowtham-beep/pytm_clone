@@ -21,5 +21,6 @@ export const accountService = {
 export const userService = {
   updateProfile: (data: { firstName: string; lastName: string }) =>
     api.put('/api/user/updateinfo', data),
-  getAllUsers: () => api.get('/api/users'),
+  getAllUsers: () => api.get('/api/user/all'),
+  getProfile:()=>api.get('/api/user/me')
 };

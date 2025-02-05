@@ -30,7 +30,7 @@ export const Dashboard = () => {
   const fetchUsers = async () => {
     try {
       const response = await userService.getAllUsers();
-      setUsers(response.data.filter((u: User) => u.id !== currentUser?.id));
+      setUsers(response.data.users);
     } catch (error) {
       toast.error('Failed to fetch users');
     }
@@ -77,7 +77,7 @@ export const Dashboard = () => {
               className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
               <RefreshCw className="h-4 w-4 mr-2" />
-              Refresh
+
             </button>
           </div>
           <div className="bg-gray-50 rounded-lg p-6">
@@ -127,13 +127,13 @@ export const Dashboard = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {filteredUsers.map((user) => (
               <div
-                key={user.id}
+                key={user.username}
                 className="border rounded-lg p-4 hover:shadow-md transition-shadow"
               >
                 <h3 className="font-semibold text-lg text-gray-900">
                   {user.firstName} {user.lastName}
                 </h3>
-                <p className="text-sm text-gray-500 mb-3">ID: {user.id}</p>
+                <p className="text-sm text-gray-500 mb-3">ID: {user.username}</p>
                 <button
                   onClick={() => {
                     setSelectedUser(user);

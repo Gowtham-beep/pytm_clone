@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { userService } from '../services/api';
 import { User } from 'lucide-react';
@@ -12,11 +12,40 @@ export const Profile = () => {
   });
   const [isEditing, setIsEditing] = useState(false);
 
+  // Fetch user details
+  const getDetails = async () => {
+    try {
+      const response = await userService.getProfile();
+      const userData = response.data.me;
+      updateUser(userData); // ✅ Update user in context
+      setFormData({
+        firstName: userData.firstName,
+        lastName: userData.lastName,
+      }); // ✅ Sync form data
+    } catch (error) {
+      toast.error('Failed to fetch user details');
+    }
+  };
+
+  // Fetch user details on mount
+  useEffect(() => {
+    getDetails();
+  }, []);
+
+  // Sync form data when user changes
+  useEffect(() => {
+    setFormData({
+      firstName: user?.firstName || '',
+      lastName: user?.lastName || '',
+    });
+  }, [user]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       await userService.updateProfile(formData);
-      updateUser({ ...user!, ...formData });
+      updateUser({ ...user!, ...formData }); // ✅ Update local context
+      getDetails(); // ✅ Fetch updated details from API
       setIsEditing(false);
       toast.success('Profile updated successfully');
     } catch (error) {
@@ -38,31 +67,23 @@ export const Profile = () => {
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
               <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  First Name
-                </label>
+                <label className="block text-sm font-medium text-gray-700">First Name</label>
                 <input
                   type="text"
                   disabled={!isEditing}
                   value={formData.firstName}
-                  onChange={(e) =>
-                    setFormData({ ...formData, firstName: e.target.value })
-                  }
+                  onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
                   className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm disabled:bg-gray-50 disabled:text-gray-500"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Last Name
-                </label>
+                <label className="block text-sm font-medium text-gray-700">Last Name</label>
                 <input
                   type="text"
                   disabled={!isEditing}
                   value={formData.lastName}
-                  onChange={(e) =>
-                    setFormData({ ...formData, lastName: e.target.value })
-                  }
+                  onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
                   className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm disabled:bg-gray-50 disabled:text-gray-500"
                 />
               </div>
