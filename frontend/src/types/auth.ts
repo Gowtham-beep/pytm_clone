@@ -12,12 +12,11 @@ export interface AuthState {
 }
 
 export interface LoginCredentials {
-  username:string;
-  password:string;
+  username: string;
+  password: string;
 }
 
 export interface SignupCredentials extends LoginCredentials {
-  
   firstName: string;
   lastName: string;
 }

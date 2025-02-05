@@ -59,4 +59,19 @@ const getuserbynames=async(req,res)=>{
     })
 }
 
-export{updateinfo,getuserbynames}
+const getProfile=async(req,res)=>{
+    const me= await User.findOne({userId:req.userId})
+    if(!me){
+        return res.status(400).json({
+            message:"Failed to fetch user data"
+        })
+    }
+    return res.status(200).json({
+        message:"user Fetched successfully",
+        me
+    })
+}
+
+
+
+export{updateinfo,getuserbynames,getProfile}

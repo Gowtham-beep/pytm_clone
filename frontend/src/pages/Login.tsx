@@ -13,7 +13,7 @@ export const Login = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await login({ email, password });
+      await login({ username:email, password });
       navigate('/dashboard');
     } catch (error) {
       toast.error('Invalid credentials');

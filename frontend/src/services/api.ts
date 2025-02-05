@@ -14,11 +14,12 @@ api.interceptors.request.use((config) => {
 
 export const accountService = {
   getBalance: () => api.get('/api/account/balance'),
-  transfer: (recipientId: string, amount: number) => 
-    api.post('/api/account/transfer', { recipientId, amount }),
+  transfer: (to: string, amount: number) => 
+    api.post('/api/account/transfer', { to, amount }),
 };
 
 export const userService = {
   updateProfile: (data: { firstName: string; lastName: string }) =>
     api.put('/api/user/updateinfo', data),
+  getAllUsers: () => api.get('/api/users'),
 };
