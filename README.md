@@ -9,7 +9,13 @@ A full-stack banking application with authentication, user account management, a
 - **User Management:** List of all registered users with search functionality.
 - **Funds Transfer:** Transfer money to other users via a modal dialog.
 - **API Integration:** Backend communication using RESTful APIs.
-
+###Learnings from This Project
+##1. Transactions in MongoDB
+I gained hands-on experience in handling transactions in MongoDB. Implementing multi-document transactions ensures that operations are executed atomically, which is crucial for consistency in financial applications like this banking app.
+##2. References and Relationships
+I explored how to define relationships between different entities, such as users and their accounts. By using references in MongoDB, I ensured data integrity and streamlined the retrieval of related information, enhancing the user experience.
+##3. Session Management
+I implemented session management in the backend, ensuring that user sessions are tracked for secure authentication and smooth interactions. This involved starting, ending, and committing sessions properly to maintain consistency and avoid issues with state.
 ## Tech Stack
 
 ### Frontend:
